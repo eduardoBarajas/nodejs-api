@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <title>Node.js API Test</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" style="color:white; background-color:blueviolet;">
+            <div class="col-md-6">
+                <h1>Node.js API Test</h1>
+            </div>
+            <div class="col-md-2 my-2">
+                <button type="button" onclick="request('get')" class="btn btn-info">Obtener Clientes</button>
+            </div>
+            <div class="col-md-2 my-2">
+                <button type="button" onclick="addClient()" class="btn btn-info">Agregar Cliente</button>
+            </div>
+        </div>
+
+        <div class="row my-4 animated fast" style="display: none;" id="clients_table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Contrasena</th>
+                        <th scope="col">Edad</th>
+                        <th scope="col">Estatura</th>
+                        <th scope="col">Peso</th>
+                        <th scope="col">GEB</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="row-fluid mx-4 my-4 animated fast" id="clients_form" style="display: none;">
+            <h3 class="my-3" style="font-weight: 300;line-height: 1.2;" id="operation_message">Modificando al cliente con id:sdokdsaokdsako</h3>
+            <form>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" aria-describedby="nombre"
+                                placeholder="ingresa tu nombre">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputApellidos">Apellidos</label>
+                            <input type="text" class="form-control" id="inputApellidos" aria-describedby="apellidos"
+                                placeholder="Ingresa tu apellidos">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputUsuario">Usuario</label>
+                            <input type="text" class="form-control" id="inputUsuario" aria-describedby="usuario"
+                                placeholder="Ingresa tu usuario">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputEmail">Correo Electronico</label>
+                            <input type="email" class="form-control" id="inputEmail" aria-describedby="email"
+                                placeholder="Ingresa tu correo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputPass">Contrasena</label>
+                            <input type="password" class="form-control" id="inputPass" aria-describedby="password"
+                                placeholder="Ingresa tu contrasena">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputEdad">Edad</label>
+                            <input type="number" class="form-control" id="inputEdad" aria-describedby="edad"
+                                placeholder="Ingresa tu edad">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputEstatura">Estatura</label>
+                            <input type="text" class="form-control" id="inputEstatura" aria-describedby="estatura"
+                                placeholder="Ingresa tu estatura">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputPeso">Peso</label>
+                            <input type="number" class="form-control" id="inputPeso" aria-describedby="peso"
+                                placeholder="Ingresa tu peso">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inputGEB">GEB</label>
+                            <input type="number" class="form-control" id="inputGEB" aria-describedby="GEB"
+                                placeholder="Ingresa tu GEB">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" onclick="request('post')" class="btn btn-success my-4" id="btnGuardar" style="display: none;">Guardar</button>
+                        <button type="button" onclick="request('put')" class="btn btn-success my-4" id="btnActualizar" style="display: none;">Actualizar</button>
+                    </div>
+                </div>                
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        // para que inicie con algo.
+        request('get');
+        function request(req) {
+            if (req === 'post' || req === 'put') {
+                let url = '';
+                (req === 'post') ? url = 'Api/NutriNet/Cliente': url = 'Api/NutriNet/Cliente/'+document.getElementById('operation_message').textContent.split(':')[1];
+                let data = {'Nombre': document.getElementById('inputNombre').value, 'Nombre_Usuario': document.getElementById('inputUsuario').value,
+                    'Correo_Electronico':  document.getElementById('inputEmail').value, 'Contrasena': document.getElementById('inputPass').value, 
+                    'Edad': document.getElementById('inputEdad').value, 'Estatura': document.getElementById('inputEstatura').value, 
+                    'Peso': document.getElementById('inputPeso').value, 'GEB': document.getElementById('inputGEB').value, 'Apellidos': 
+                    document.getElementById('inputApellidos').value};
+                fetch(url, {
+                    method: req.toUpperCase(),
+                    body: JSON.stringify(data), 
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+                    if (data['status'] !== null && data['status'] === '400') {
+                        let errMsg = '';
+                        for (var type in data['errors']) {
+                            errMsg += `--${type}--:${data['errors'][type]}`;
+                        }
+                        errMsg = errMsg.substr(0, errMsg.length - 1);
+                        alert(errMsg);
+                    } else {
+                        alert(`CVE_MENSAJE: ${data['_id']}`);
+                    }
+                });
+            }
+            
+            if (req === 'get') {
+                fetch('Api/NutriNet/Cliente').then(response => {
+                    return response.json();
+                }).then(data => {
+                    let index = 0;
+                    while (document.getElementById('table_row_' + index) !== null) {
+                        document.getElementsByClassName('table')[0].removeChild(document.getElementById('table_row_' + index));
+                        index++;
+                    }
+                    data.forEach(cliente => {
+                        let row = document.createElement('tbody');
+                        let content = document.createElement('tr');
+                        let nameCell = document.createElement('th');
+                        nameCell.scope = 'row';
+                        nameCell.textContent = cliente.Nombre;
+                        content.appendChild(nameCell);
+                        content.appendChild(createCell('td', cliente.Apellidos));
+                        content.appendChild(createCell('td', cliente.Nombre_Usuario));
+                        content.appendChild(createCell('td', cliente.Correo_Electronico));
+                        content.appendChild(createCell('td', cliente.Contrasena));
+                        if (cliente['Edad'] != null) {
+                            content.appendChild(createCell('td', cliente.Edad));
+                        } else {
+                            content.appendChild(createCell('td', 'No Definido'));
+                        }
+                        if (cliente['Estatura'] != null) {
+                            content.appendChild(createCell('td', cliente.Estatura));
+                        } else {
+                            content.appendChild(createCell('td', 'No Definido'));
+                        }
+                        if (cliente['Peso'] != null) {
+                            content.appendChild(createCell('td', cliente.Peso));
+                        } else {
+                            content.appendChild(createCell('td', 'No Definido'));
+                        }
+                        if (cliente['GEB'] != null) {
+                            content.appendChild(createCell('td', cliente.GEB));
+                        } else {
+                            content.appendChild(createCell('td', 'No Definido'));
+                        }
+                        row.appendChild(content);
+                        row.onclick = function clienteSeleccionado() {
+                            updateClient(cliente);
+                        }
+                        row.id = 'table_row_' + data.indexOf(cliente);
+                        document.getElementsByClassName('table')[0].appendChild(row);
+                        initTransition('table');
+                    });
+                });
+            }
+        }
+
+        function addClient() {
+            document.getElementById('btnActualizar').style.display = 'none';
+            document.getElementById('btnGuardar').style.display = 'block';
+            document.getElementById('operation_message').textContent = 'Agregar Nuevo Cliente';
+            initTransition('form');
+        }
+
+        function createCell(type, text) {
+            let cell = document.createElement(type);
+            cell.textContent = text;
+            return cell;
+        }
+
+        function updateClient(client) {
+            document.getElementById('btnGuardar').style.display = 'none';
+            document.getElementById('btnActualizar').style.display = 'block';
+            document.getElementById('operation_message').textContent = 'Modificando Cliente con ID:'+client._id;
+            setClientInfo(client);
+            initTransition('form');
+        }
+
+        function initTransition(newTransition) {
+            let options = {'table': 'form', 'form': 'table'};
+            let old = document.getElementById('clients_'+options[newTransition]);
+            let current = document.getElementById('clients_'+newTransition);
+            if (old.classList.contains('fadeIn')) {
+                old.classList.remove('fadeIn');
+                old.style.display = 'none';
+                current.classList.add('fadeIn');
+                current.style.display = 'block';
+            } else {
+                current.classList.add('fadeIn');
+                current.style.display = 'block';
+            }
+        }
+
+        function setClientInfo(client) {
+            document.getElementById('inputNombre').value = client.Nombre;
+            document.getElementById('inputApellidos').value = client.Apellidos;
+            document.getElementById('inputUsuario').value = client.Nombre_Usuario;
+            document.getElementById('inputEmail').value = client.Correo_Electronico;
+            document.getElementById('inputPass').value = client.Contrasena;
+            document.getElementById('inputEdad').value = client.Edad;
+            document.getElementById('inputEstatura').value = client.Estatura;
+            document.getElementById('inputPeso').value = client.Peso;
+            document.getElementById('inputGEB').value = client.GEB;
+        }
+    </script>
+</body>
+
+</html>
