@@ -12,24 +12,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <title>Node.js API Test</title>
 </head>
-
 <body>
     <div class="container-fluid">
         <div class="row" style="color:white; background-color:blueviolet;">
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <h1>Node.js API Test</h1>
             </div>
-            <div class="col-md-2 my-2">
+            <div class="col-6 col-md-2 my-2">
                 <button type="button" onclick="request('get')" class="btn btn-info">Obtener Clientes</button>
             </div>
-            <div class="col-md-2 my-2">
+            <div class="col-6 col-md-2 my-2">
                 <button type="button" onclick="addClient()" class="btn btn-info">Agregar Cliente</button>
             </div>
         </div>
 
-        <div class="row my-4 animated fast" style="display: none;" id="clients_table">
-            <table class="table">
-                <thead>
+        <div class="row mx-2 my-4 animated fast" style="display: none;overflow-x: auto;" id="clients_table">
+            <table class="table table-bordered table-hover">
+                <thead style="background-color: blueviolet; color: whitesmoke;">
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellidos</th>
@@ -122,9 +121,12 @@
                                 placeholder="Ingresa tu GEB">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <button type="button" onclick="request('post')" class="btn btn-success my-4" id="btnGuardar" style="display: none;">Guardar</button>
                         <button type="button" onclick="request('put')" class="btn btn-success my-4" id="btnActualizar" style="display: none;">Actualizar</button>
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" onclick="request('delete')" class="btn btn-danger my-4" id="btnEliminar" style="display: none;">Borrar</button>
                     </div>
                 </div>                
             </form>
