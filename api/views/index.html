@@ -175,6 +175,8 @@
                         alert(errMsg);
                     } else {
                         alert(`CVE_MENSAJE: ${data['_id']}`);
+                        request('get');
+                        clearClientInfo();
                     }
                 });
             }
